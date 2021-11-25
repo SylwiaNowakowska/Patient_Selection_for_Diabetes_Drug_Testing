@@ -25,7 +25,7 @@ def cast_df(df, col, d_type=str):
 def impute_df(df, col, impute_value=0):
     return df[col].fillna(impute_value)
     
-def preprocess_df(df, categorical_col_list, numerical_col_list, predictor, categorical_impute_value='nan',             numerical_impute_value=0):
+def preprocess_df(df, categorical_col_list, numerical_col_list, predictor, categorical_impute_value='nan', numerical_impute_value=0):
     df[predictor] = df[predictor].astype(float)
     for c in categorical_col_list:
         df[c] = cast_df(df, c, d_type=str)
@@ -38,7 +38,7 @@ def df_to_dataset(df, predictor,  batch_size=32):
     df = df.copy()
     labels = df.pop(predictor)
     ds = tf.data.Dataset.from_tensor_slices((dict(df), labels))
-    ds = ds.shuffle(buffer_size=len(df))
+#     ds = ds.shuffle(buffer_size=len(df))
     ds = ds.batch(batch_size)
     return ds
 
